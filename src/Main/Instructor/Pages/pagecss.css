@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "lato", sans-serif;
+}
+
+.regularassessmentweight,
+.regularassessmententry,
+.regularresultsummary,
+.makeupassessmentweight,
+.makeupassessmententry,
+.makeupresultsummary,
+.regularentry,
+.specialentry {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
