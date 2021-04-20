@@ -55,6 +55,9 @@ export const SET_ATTENDANCE_HEADER = "SET_ATTENDANCE_HEADER"
 
 export const SET_MARK_ONLY = "SET_MARK_ONLY"
 
+export const    GET_STUDENT_ID = "  GET_STUDENT_ID"
+
+
 
 
 
