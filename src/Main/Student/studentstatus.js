@@ -1,33 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-  CircularProgress,
-} from "@material-ui/core";
-
+import { Button, Grid } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Header from "../Header/header";
-
 // import { docourseassign } from "../Redux/Action/assigncourses"
 // import { getcourses } from "../Redux/Action/course"
 // import { loaduser } from "../Redux/Action/mainlogin";
 import { loaduserstud } from "../Redux/Action/authentication";
-
-import { getgrades, getcourses } from "../Redux/Action/studentstatus";
+import { getcourses, getgrades } from "../Redux/Action/studentstatus";
 
 const Assigncourse = ({
   isauthenticated,
@@ -44,12 +23,14 @@ const Assigncourse = ({
 
   const [displaycourse, setdisplaycourse] = useState("none");
   const [displaygrade, setdisplaygrade] = useState("none");
+  const [displaystatus, setdisplaystatus] = useState("none");
 
   const handledisplaycourse = (id) => {
     if (displaycourse === "none") {
       getcourses(id);
       setdisplaycourse("block");
       setdisplaygrade("none");
+      setdisplaystatus("none");
     } else {
       setdisplaycourse("none");
     }
@@ -60,11 +41,22 @@ const Assigncourse = ({
       getgrades(id);
       setdisplaygrade("block");
       setdisplaycourse("none");
+      setdisplaystatus("none");
     } else {
       setdisplaygrade("none");
     }
   };
 
+  const handledisplaystatus = (id) => {
+    if (displaystatus === "none") {
+      getgrades(id);
+      setdisplaygrade("none");
+      setdisplaycourse("none");
+      setdisplaystatus("block");
+    } else {
+      setdisplaystatus("none");
+    }
+  };
   return (
     <Fragment>
       <Header name={user !== null ? user.Firstname : null} />
@@ -88,6 +80,15 @@ const Assigncourse = ({
             onClick={() => handledisplaygrade(user._id)}
           >
             My Grades
+          </Button>
+
+          <Button
+            style={{ marginTop: 30, marginLeft: 100, width: 200 }}
+            variant="outlined"
+            color="primary"
+            onClick={() => handledisplaystatus(user._id)}
+          >
+            My Status
           </Button>
         </Grid>
 
@@ -177,11 +178,14 @@ const Assigncourse = ({
                       <td>{item.Course}</td>
                       <td>{item.Grade}</td>
                     </tr>
-                   
                   </tbody>
                 );
               })}
             </table>
+          </div>
+
+          <div style={{ display: displaystatus }}>
+            <h3>display status section</h3>
           </div>
         </Grid>
       </Grid>

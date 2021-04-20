@@ -416,39 +416,21 @@ const Homeinstructor = ({
                       Result Summary
                     </button>{" "}
                   </li>
+
+                  <li style={allregularstyle}>
+                    {" "}
+                    <button
+                     // onClick={() => handleregularresultsummary(user._id)}
+                      className="btn btn-secondary btn-rounded"
+                    >
+                      Special entry
+                    </button>{" "}
+                  </li>
+
+                  
                 </ul>
               </li>
 
-              <li>
-                <button
-                  onClick={handlespecialli}
-                  className="btn btn-success btn-rounded"
-                  style={{ marginTop: 10 }}
-                >
-                  Special entry
-                </button>
-                <ul>
-                  <li style={allspecialstyle}>
-                    {" "}
-                    <button className="btn btn-secondary btn-rounded">
-                      {" "}
-                      Makeup Assessment Weight
-                    </button>{" "}
-                  </li>
-                  <li style={allspecialstyle}>
-                    {" "}
-                    <button className="btn btn-secondary btn-rounded">
-                      Makeup Assessment Entry
-                    </button>{" "}
-                  </li>
-                  <li style={allspecialstyle}>
-                    {" "}
-                    <button className="btn btn-secondary btn-rounded">
-                      Makeup Result Summary
-                    </button>{" "}
-                  </li>
-                </ul>
-              </li>
               <li>
                 <button
                   onClick={handlegradingsystem}

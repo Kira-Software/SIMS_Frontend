@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Header from "../../../Header/header";
 
 import { Typography } from "@material-ui/core";
 import { Fragment } from "react";
+
+import { loaduserinstructor } from "../../../Redux/Action/authinstructor";
 
 const Rresultsummary = ({
   user,
@@ -11,7 +13,18 @@ const Rresultsummary = ({
   markonly,
   attendanceheader,
   tempjob,
+  loaduserinstructor,
 }) => {
+  useEffect(() => {
+    loaduserinstructor();
+  }, []);
+
+  let flag = "none";
+
+  let btnstyle = {
+    display: flag,
+  };
+
   return (
     <>
       <Header name={user !== null ? user.Instructorfname : null} />
@@ -49,7 +62,7 @@ const Rresultsummary = ({
 
         <div
           className="cardbody"
-          style={{ width: "50%", marginLeft: "25%", marginTop: 50 }}
+          style={{ width: "50%", marginLeft: "25%", marginTop: 20 }}
         >
           <table className="table table-bordered table-responsive-md table-striped text-center">
             <thead>
@@ -59,24 +72,38 @@ const Rresultsummary = ({
               </tr>
             </thead>
             <tbody>
-              {markonly.length !== 0 && studentid.length !== 0
-                ? markonly.map((individualmark, individualmarkidx) => {
-                    return (
-                      <Fragment key={individualmarkidx}>
-                        {studentid.map((individualid, individualididx) => {
-                          if (individualmark[9] === individualid.Studid) {
-                            return (
-                              <tr key={individualididx}>
-                                <td>{individualid.Id}</td>
-                                <td>{individualmark[8]}</td>
-                              </tr>
-                            );
-                          }
-                        })}
-                      </Fragment>
-                    );
-                  })
-                : null}
+              {markonly.length !== 0 && studentid.length !== 0 ? (
+                markonly.map((individualmark, individualmarkidx) => {
+                  return (
+                    <Fragment key={individualmarkidx}>
+                      {studentid.map((individualid, individualididx) => {
+                        if (individualmark[9] === individualid.Studid) {
+                          return (
+                            <tr key={individualididx}>
+                              <td>{individualid.Id}</td>
+                              <td>{individualmark[8]}</td>
+                            </tr>
+                          );
+                        }
+                      })}
+
+                      {individualmarkidx === markonly.length - 1 ? (
+                        <td colSpan="2">
+                          <button className="btn btn-warning btn-rounded">
+                            Submit for approval
+                          </button>
+                        </td>
+                      ) : null}
+                    </Fragment>
+                  );
+                })
+              ) : (
+                <td colSpan="2">
+                  <Typography color="secondary">
+                    There are no records
+                  </Typography>
+                </td>
+              )}
             </tbody>
           </table>
         </div>
@@ -93,4 +120,4 @@ const mapStateToProps = (state) => ({
   tempjob: state.instructor.tempjob,
 });
 
-export default connect(mapStateToProps)(Rresultsummary);
+export default connect(mapStateToProps, { loaduserinstructor })(Rresultsummary);
