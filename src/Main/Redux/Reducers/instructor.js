@@ -7,6 +7,7 @@ import {
   GET_INSTRUCTOR_MARK,
   SET_ATTENDANCE_HEADER,
   SET_MARK_ONLY,
+  GET_STUDENT_ID,
 } from "../Action/type";
 
 const initialstate = {
@@ -18,6 +19,7 @@ const initialstate = {
   instructormark: [],
   attendanceheader: [],
   markonly: [],
+  studentid: [],
 };
 
 export default function (state = initialstate, action) {
@@ -76,6 +78,13 @@ export default function (state = initialstate, action) {
       return {
         ...state,
         markonly: payload,
+        loading: false,
+      };
+
+    case GET_STUDENT_ID:
+      return {
+        ...state,
+        studentid: payload,
         loading: false,
       };
 
