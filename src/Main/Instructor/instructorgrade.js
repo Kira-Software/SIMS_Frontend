@@ -1,23 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import { TextField } from "@material-ui/core";
-
-import { Link, Redirect } from "react-router-dom";
-
-import axios from "axios";
-
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
-import Header from "../Header/header";
+import { Redirect } from "react-router-dom";
 import Footer from "../Footer/footer";
+import Header from "../Header/header";
+import Alert from "../layout/alert";
 //import {giveapplication} from "../Redux/Action/giveapplication"
 import { loaduserinstructor } from "../Redux/Action/authinstructor";
-import { getinstructorstudentgrade } from "../Redux/Action/instructorjob";
-import { setgrade } from "../Redux/Action/instructorjob";
-import { setmark, getmark } from "../Redux/Action/instructorassessment";
-
-import Alert from "../layout/alert";
+import { getmark, setmark } from "../Redux/Action/instructorassessment";
+import {
+  getinstructorstudentgrade,
+  setgrade,
+} from "../Redux/Action/instructorjob";
 
 const Instructorgrade = ({
   isauthenticated,
@@ -138,7 +131,7 @@ const Instructorgrade = ({
 
   let [assessment, setassessment] = React.useState([[]]);
   let [temppush, settemppush] = React.useState(true);
-  const [buttonflag , setbuttonflag] = React.useState(true)
+  const [buttonflag, setbuttonflag] = React.useState(true);
 
   let totals = [];
 
@@ -203,8 +196,8 @@ const Instructorgrade = ({
     console.log("inside of the handlemarkchangeafter");
     console.log("the initial tassessment is  ", tassessment);
 
-    if(buttonflag === true){
-      setbuttonflag(false)
+    if (buttonflag === true) {
+      setbuttonflag(false);
     }
 
     if (temppush) {

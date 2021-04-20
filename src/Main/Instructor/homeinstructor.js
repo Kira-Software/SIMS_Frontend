@@ -1,55 +1,26 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-} from "@material-ui/core";
-
-import { Link, Redirect } from "react-router-dom";
-
-import axios from "axios";
-
+import { Button, Grid, Typography } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
-import Header from "../Header/header";
+import { Link, Redirect } from "react-router-dom";
 import Footer from "../Footer/footer";
+import Header from "../Header/header";
 //import {giveapplication} from "../Redux/Action/giveapplication"
 import { loaduserinstructor } from "../Redux/Action/authinstructor";
-import { getinstructorjob } from "../Redux/Action/instructorjob";
-import {
-  getinstructorstudentgrade,
-  getstudentscourseregistered,
-  updatetempjob,
-  updateattendanceheader,
-} from "../Redux/Action/instructorjob";
-
 import {
   addassessment,
   getassessment,
   getmark,
 } from "../Redux/Action/instructorassessment";
-
-import { SidebarData } from "./Newinstructor/SidebarData";
-
-import Rassessmententry from "./Pagecomponents/Regular/Rassessmententry";
-import Rassessmentweight from "./Pagecomponents/Regular/Rassessmentweight";
-import Rresultsummary from "./Pagecomponents/Regular/Rresultsummary";
+import {
+  getinstructorjob,
+  getinstructorstudentgrade,
+  getstudentscourseregistered,
+  updateattendanceheader,
+  updatetempjob,
+} from "../Redux/Action/instructorjob";
+import { getstudentid } from "../Redux/Action/selectstudents";
 import Gradingsystem from "./Pagecomponents/Gradingsystem/gradingsystem";
-import Instructorcourses from "./Pagecomponents/Instructorcourses/instructorcourses";
-import Studentattendance from "./Pagecomponents/Studentattendance/studentattendance";
+import Rassessmentweight from "./Pagecomponents/Regular/Rassessmentweight";
 
 const Homeinstructor = ({
   isauthenticated,
@@ -65,6 +36,8 @@ const Homeinstructor = ({
   getmark,
   loading,
   updateattendanceheader,
+  getstudentid,
+  studentid,
 }) => {
   useEffect(() => {
     loaduserinstructor();
@@ -110,6 +83,7 @@ const Homeinstructor = ({
     if (regularlistyle === "none") {
       setregularlistyle("block");
       setspeciallistyle("none");
+      getstudentid();
       //setdisplaygradingsystem("none")
     } else {
       setregularlistyle("none");
@@ -158,10 +132,11 @@ const Homeinstructor = ({
   //   getinstructorjob(id);
   // }
 
-  const handleregularresultsummary = () => {
+  const handleregularresultsummary = (id) => {
     if (displayrresultsummary === "none") {
       //setdisplayrassessmententry("none");
       setjob("none");
+      getinstructorjob(id);
       setdisplayrresultsummary("block");
       setdisplayrassessmentweight("none");
       setdisplaygradingsystem("none");
@@ -265,6 +240,22 @@ const Homeinstructor = ({
     updateattendanceheader(Year, Semister, Section);
     //getassessment();
     // getmark(Coursename, Year, Semister, Section);
+  };
+
+  const handleinstructorresultsummary = (
+    Department,
+    Year,
+    Semister,
+    Section,
+    Coursename
+  ) => {
+    console.log("inside of the local attendance method");
+    // getinstructorstudentgrade(Department, Year, Semister, Section);
+    // getstudentscourseregistered(Department, Year, Semister, Section);
+    updatetempjob(Coursename);
+    updateattendanceheader(Year, Semister, Section);
+    //getassessment();
+    getmark(Coursename, Year, Semister, Section);
   };
 
   const [formdata, setformdata] = useState({
@@ -419,7 +410,7 @@ const Homeinstructor = ({
                   <li style={allregularstyle}>
                     {" "}
                     <button
-                      onClick={handleregularresultsummary}
+                      onClick={() => handleregularresultsummary(user._id)}
                       className="btn btn-secondary btn-rounded"
                     >
                       Result Summary
@@ -505,19 +496,7 @@ const Homeinstructor = ({
             <Rassessmentweight />
           </div>
 
-          {/* <div style={{ display: displayrassessmententry }}>
-            <Rassessmententry />
-          </div> */}
-
-          <div style={{ display: displayrresultsummary }}>
-            <Rresultsummary />
-          </div>
           <div style={{ display: job, marginTop: 100 }}>
-            {/* <strong>
-               <p style={{ marginLeft: 50, color: "green", fontSize: 24 }}>
-                Your Assigned Jobs are
-              </p>
-            </strong> */}
             <Typography variant="h6" color="primary" style={{ margin: 50 }}>
               Courses teaching by instructor
             </Typography>
@@ -556,8 +535,43 @@ const Homeinstructor = ({
               : null}
           </div>
 
-          <div style={{ display: displaygradingsystem }}>
-            <Gradingsystem />
+          <div style={{ display: displayrresultsummary, marginTop: 100 }}>
+            <Typography variant="h6" color="primary" style={{ margin: 50 }}>
+              Choose a section for the result summary
+            </Typography>
+            {instructorjob.length !== null
+              ? instructorjob.map((item, idx) => {
+                  return (
+                    <div style={{ marginLeft: 200 }} key={idx}>
+                      <div> Year : {item.Year}</div>
+                      <div> Semister : {item.Semister}</div>
+                      <div> Coursename : {item.Coursename}</div>
+                      <Link
+                        to="/resultsummary"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          onClick={() =>
+                            handleinstructorresultsummary(
+                              user.Department,
+                              item.Year,
+                              item.Semister,
+                              item.Section,
+                              item.Coursename
+                            )
+                          }
+                        >
+                          {" "}
+                          Section : {item.Section}
+                        </Button>
+                      </Link>
+                      <br></br> <hr></hr> <br></br>
+                    </div>
+                  );
+                })
+              : null}
           </div>
 
           <div style={{ display: displaystudentattendance }}>
@@ -599,6 +613,10 @@ const Homeinstructor = ({
                 })
               : null}
           </div>
+
+          <div style={{ display: displaygradingsystem }}>
+            <Gradingsystem />
+          </div>
         </Grid>
       </Grid>
 
@@ -620,6 +638,7 @@ const mapStateToProps = (state) => ({
   isauthenticated: state.authreducer.isauthenticated,
   instructorjob: state.instructor.instructorjob,
   loading: state.instructor.loading,
+  studentid: state.instructor.studentid,
 });
 
 export default connect(mapStateToProps, {
@@ -632,6 +651,7 @@ export default connect(mapStateToProps, {
   getassessment,
   getmark,
   updateattendanceheader,
+  getstudentid,
 })(Homeinstructor);
 
 //export default Homeinstructor;

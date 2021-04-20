@@ -26,6 +26,8 @@ import Courseregistration from "./Main/Student/courseregistration";
 import Loginforinstructor from "./Main/Instructor/login";
 import Homeinstructor from "./Main/Instructor/homeinstructor";
 import Instructorgrade from "./Main/Instructor/instructorgrade";
+import Rresultsummary from "./Main/Instructor/Pagecomponents/Regular/Rresultsummary";
+
 import Studentstatus from "./Main/Student/studentstatus";
 import Addcourse from "./Main/Student/addcourse";
 import Dropcourse from "./Main/Student/dropcourse";
@@ -135,6 +137,8 @@ function App() {
             exact
             component={Makeupresultsummary}
           />
+
+          <Route path="/resultsummary" exact component={Rresultsummary} />
 
           <Route path="/attendancetable" exact component={Attendancetable} />
 

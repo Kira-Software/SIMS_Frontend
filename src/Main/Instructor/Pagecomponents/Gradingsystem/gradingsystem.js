@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import {Typography} from "@material-ui/core"
+import { Typography } from "@material-ui/core";
+import React from "react";
 
 const Gradingsystem = () => {
   return (
-    <div style={{marginLeft: 50}}>
+    <div style={{ marginLeft: 50 }}>
       <Typography variant="h6" color="primary" style={{ margin: 50 }}>
         Grading system according to university legislation
       </Typography>
