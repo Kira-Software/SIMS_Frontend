@@ -3,7 +3,9 @@ import {
   GET_INSTRUCTOR_STUDENT_GRADE,
   GET_STUDENT_COURSE_REGISTERED,
   SET_TEMPJOB,
-  SET_ATTENDANCE_HEADER
+  SET_ATTENDANCE_HEADER,
+  SET_INSTRUCTOR_ID,
+  GET_DEPARTMENT_NAME,
 } from "./type";
 import axios from "axios";
 
@@ -103,12 +105,52 @@ export const updatetempjob = (Coursename) => async (dispatch) => {
   }
 };
 
-export const updateattendanceheader = (Year,Semister,Section) => async (dispatch) => {
+export const updateinstructorid = (Instructorid) => async (dispatch) => {
   console.log("inside the updatetempjob action");
   //dispatch(loaduser());
 
   // console.log("the coming id is " + id);
-  const temp=[Year,Semister,Section]
+
+  try {
+    ///////////making the application approved
+
+    dispatch({
+      type: SET_INSTRUCTOR_ID,
+      payload: Instructorid,
+    });
+  } catch (err) {
+    console.log("there is some error while fetching data for you");
+    console.error(err.message);
+  }
+};
+
+export const updatedepartmentname = (Departmentname) => async (dispatch) => {
+  console.log("inside the updatetempjob action");
+  //dispatch(loaduser());
+
+  // console.log("the coming id is " + id);
+
+  try {
+    ///////////making the application approved
+
+    dispatch({
+      type: GET_DEPARTMENT_NAME,
+      payload: Departmentname,
+    });
+  } catch (err) {
+    console.log("there is some error while fetching data for you");
+    console.error(err.message);
+  }
+};
+
+export const updateattendanceheader = (Year, Semister, Section) => async (
+  dispatch
+) => {
+  console.log("inside the updatetempjob action");
+  //dispatch(loaduser());
+
+  // console.log("the coming id is " + id);
+  const temp = [Year, Semister, Section];
 
   try {
     ///////////making the application approved

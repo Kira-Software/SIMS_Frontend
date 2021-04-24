@@ -1,28 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-  CircularProgress,
-} from "@material-ui/core";
-import { Link, Redirect } from "react-router-dom";
-
+import { Button } from "@material-ui/core";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Header from "../Header/header";
-
+import { Redirect } from "react-router-dom";
+import Header from "../Header/headerstudent";
 // import { docourseassign } from "../Redux/Action/assigncourses";
 // import { getcourses } from "../Redux/Action/course";
 // import { loaduser } from "../Redux/Action/mainlogin";
@@ -122,12 +102,12 @@ const Courseregistration = ({
   };
 
   const handleregister = () => {
-    studentcoursereg(Courses)
+    studentcoursereg(Courses);
   };
 
-    if (!isauthenticated) {
-      return <Redirect to="/login" />;
-    }
+  if (!isauthenticated) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <Fragment>

@@ -1,38 +1,23 @@
 //importing the necessary documentt
 
-import React, { Fragment, useState, useEffect } from "react";
-
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
   Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
+  FormControl,
   FormControlLabel,
+  Paper,
   Radio,
-  FormGroup,
-  Checkbox,
+  RadioGroup,
+  TextField,
+  Typography,
 } from "@material-ui/core";
-
-import "../App.css";
-
-import { Link } from "react-router-dom";
-
-import axios from "axios";
-
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { send_application } from "../Redux/Action/sendapplication";
-
+import React, { Fragment, useState } from "react";
+import { connect } from "react-redux";
+import "../App.css";
+import Footer from "../Footer/footer";
 import Headerapplication from "../Header/headerapplication";
 import Alert from "../layout/alert";
-
-import Footer from "../Footer/footer"
+import { send_application } from "../Redux/Action/sendapplication";
 
 //beginning of the functional component
 
@@ -159,8 +144,12 @@ const Application = ({ send_application }) => {
       <Headerapplication />
 
       <Paper style={{ margin: 100 }} elevation={10}>
-      <Typography variant="h4" style={{textAlign:"center", marginBottom: 50}}>Application Form </Typography>
-
+        <Typography
+          variant="h4"
+          style={{ textAlign: "center", marginBottom: 50 }}
+        >
+          Application Form{" "}
+        </Typography>
 
         <FormControl style={{ marginLeft: 100, marginTop: 50 }}>
           <form onSubmit={(event) => handlesubmit(event)}>
@@ -467,13 +456,16 @@ const Application = ({ send_application }) => {
             <Button
               color="primary"
               variant="contained"
-              style={{ marginTop: 100, marginLeft: 400, width: 100 ,marginBottom:100}}
+              style={{
+                marginTop: 100,
+                marginLeft: 400,
+                width: 100,
+                marginBottom: 100,
+              }}
             >
               <input type="submit" value="Submit Form" />
             </Button>
-            
             <Alert />
-
             {/* <Link
                   to="/signup"
                   color="secondary"

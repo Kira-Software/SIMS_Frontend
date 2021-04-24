@@ -11,6 +11,9 @@ import Registrar from "./Main/Registrar/registrar";
 import Headerlogin from "./Main/Header/headerlogin";
 import Request from "./Main/Registrar/request";
 import Approved from "./Main/Registrar/approved";
+import Registrarapproval from "./Main/Registrar/registrarapproval";
+import Displayregistrarapproval from "./Main/Registrar/displayregistrarapproval";
+
 import Loging from "./Main/Student/login";
 import Homestudent from "./Main/Student/Homestudent";
 import Adddepartment from "./Main/Registrar/adddeparment";
@@ -20,6 +23,8 @@ import Coursestaff from "./Main/Department/coursestaff";
 import Departmentlogin from "./Main/Department/departmentlogin";
 import Studentstaff from "./Main/Department/Studentstaff";
 import Instructorstaff from "./Main/Department/instructorstaff";
+import Gradeapproval from "./Main/Department/gradeapproval";
+import Displaygraderequests from "./Main/Department/displayapprovalrequests";
 
 import Courseregistration from "./Main/Student/courseregistration";
 
@@ -73,8 +78,19 @@ function App() {
           />
 
           <Route path="/registrar" exact component={Registrar} />
-          <Route path="/request" exact component={Request} />
-          <Route path="/approved" exact component={Approved} />
+          <Privateroute path="/request" exact component={Request} />
+          <Privateroute path="/approved" exact component={Approved} />
+          <Privateroute
+            path="/registrarapproval"
+            exact
+            component={Registrarapproval}
+          />
+          <Privateroute
+            path="/displayregistrarapproval"
+            exact
+            component={Displayregistrarapproval}
+          />
+
           <Route path="/login" exact component={Loging} />
           <Route path="/homestudent" exact component={Homestudent} />
           <Route path="/adddepartment" exact component={Adddepartment} />
@@ -87,6 +103,13 @@ function App() {
             path="/instructorstaff"
             exact
             component={Instructorstaff}
+          />
+
+          <Privateroute path="/gradeapproval" exact component={Gradeapproval} />
+          <Privateroute
+            path="/displaygraderequests"
+            exact
+            component={Displaygraderequests}
           />
 
           <Route path="/logininstructor" exact component={Loginforinstructor} />

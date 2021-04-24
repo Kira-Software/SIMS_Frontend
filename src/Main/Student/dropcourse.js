@@ -1,40 +1,11 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-} from "@material-ui/core";
-
-import { Link, Redirect } from "react-router-dom";
-
-import axios from "axios";
-
+import { Button } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
-import Header from "../Header/header";
+import Header from "../Header/headerstudent";
 //import {giveapplication} from "../Redux/Action/giveapplication"
 import { loaduserstud } from "../Redux/Action/authentication";
-
-import {
-  getaddsemistercourses,
-  getaddtakencourses,
-} from "../Redux/Action/studentaddcourse";
-
-import { getcourses } from "../Redux/Action/studentstatus";
 import { studentcoursedrop } from "../Redux/Action/studentdrop";
+import { getcourses } from "../Redux/Action/studentstatus";
 
 const Dropcourse = ({
   isauthenticated,

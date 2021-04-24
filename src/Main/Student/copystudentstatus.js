@@ -16,7 +16,7 @@ const Assigncourse = ({
   getgrades,
   getcourses,
   loaduserstud,
-  newstudentgrade,
+  newstudentgrade
 }) => {
   useEffect(() => {
     loaduserstud();
@@ -74,14 +74,13 @@ const Assigncourse = ({
             My Courses
           </Button>
           <br></br>
-
-          <Button
+          {/* <Button
             style={{ marginTop: 30, marginLeft: 100, width: 200 }}
             variant="outlined"
             color="primary"
             onClick={() => handledisplaygrade(user._id)}
           >
-            New Grades
+            My Grades
           </Button>
 
           <Button
@@ -90,18 +89,33 @@ const Assigncourse = ({
             color="primary"
             onClick={() => handledisplaystatus(user._id)}
           >
+            My Status
+          </Button> */}
+
+          <Button
+            style={{ marginTop: 30, marginLeft: 100, width: 200 }}
+            variant="outlined"
+            color="primary"
+           // onClick={() => handledisplaystatus(user._id)}
+          >
+            New Grades
+          </Button>
+
+          <Button
+            style={{ marginTop: 30, marginLeft: 100, width: 200 }}
+            variant="outlined"
+            color="primary"
+           // onClick={() => handledisplaystatus(user._id)}
+          >
             New Status
           </Button>
         </Grid>
 
         <Grid item lg={7} xl={7}>
           <div style={{ display: displaycourse }}>
-            <div className="card" style={{ marginTop: 50, marginBottom: 100 }}>
-              <h3 className="card-header text-center font-weight-bold text-uppercase py-4">
-                Enrolled Courses
-              </h3>{" "}
-            </div>{" "}
-            <table className="table table-bordered table-responsive-md table-striped text-center">
+            <p>Course display section</p>
+
+            <table border="3" cellSpacing="1" cellPadding="20" width="800">
               <thead style={{ marginRight: 50 }}>
                 <tr>
                   <th>Department</th>
@@ -152,96 +166,45 @@ const Assigncourse = ({
 
           <div style={{ display: displaygrade }}>
             <p>Grade display section</p>
-            <div className="card" style={{ marginTop: 50, marginBottom: 100 }}>
-              <h3 className="card-header text-center font-weight-bold text-uppercase py-4">
-                Student Grade
-              </h3>{" "}
-            </div>{" "}
-            <table className="table table-bordered table-responsive-md table-striped text-center">
-              <thead>
+
+            <table border="3" cellSpacing="1" cellPadding="20" width="800">
+              <thead style={{ marginRight: 50 }}>
                 <tr>
                   <th>Year</th>
                   <th>Semister</th>
-                  <th>Coursename</th>
+                  <th>Courses</th>
                   <th>Grade</th>
-                  {/* <th>Credithour</th> */}
+                  {/*  <th>Sex</th>
+                      <th>Email Address</th> */}
                 </tr>
               </thead>
-              <tbody>
-                {newstudentgrade.length !== 0
-                  ? newstudentgrade.map((item, itemidx) => {
-                      return (
-                        <Fragment key={itemidx}>
-                          {item.Assessment.map((individual, individualidx) => {
-                            if (
-                              individual[item.Assessmentnumber + 4] === user._id
-                            ) {
-                              return (
-                                <tr key={individualidx}>
-                                  <td>{item.Year}</td>
-                                  <td>{item.Semister}</td>
-                                  <td>{item.Coursename}</td>
-                                  <td>
-                                    {individual[item.Assessmentnumber + 3]}
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          })}
-                        </Fragment>
-                      );
-                    })
-                  : null}
-              </tbody>
+              {studentgrades.length == 0 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan="5" style={{ color: "red" }}>
+                      There are no records
+                    </td>
+                  </tr>
+                </tbody>
+              ) : null}
+
+              {studentgrades.map((item, idx) => {
+                return (
+                  <tbody key={idx}>
+                    <tr>
+                      <td>{item.Year}</td>
+                      <td>{item.Semister}</td>
+                      <td>{item.Course}</td>
+                      <td>{item.Grade}</td>
+                    </tr>
+                  </tbody>
+                );
+              })}
             </table>
           </div>
 
           <div style={{ display: displaystatus }}>
             <h3>display status section</h3>
-
-            <div className="card" style={{ marginTop: 50, marginBottom: 100 }}>
-              <h3 className="card-header text-center font-weight-bold text-uppercase py-4">
-                Student Status
-              </h3>{" "}
-            </div>{" "}
-            <table className="table table-bordered table-responsive-md table-striped text-center">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th>Semister</th>
-                  <th>GPA</th>
-                  <th>CGPA</th>
-
-                  {/* <th>Credithour</th> */}
-                </tr>
-              </thead>
-              {/* <tbody>
-                {newstudentgrade.length !== 0
-                  ? newstudentgrade.map((item, itemidx) => {
-                      return (
-                        <Fragment key={itemidx}>
-                          {item.Assessment.map((individual, individualidx) => {
-                            if (
-                              individual[item.Assessmentnumber + 4] === user._id
-                            ) {
-                              return (
-                                <tr key={individualidx}>
-                                  <td>{item.Year}</td>
-                                  <td>{item.Semister}</td>
-                                  <td>{item.Coursename}</td>
-                                  <td>
-                                    {individual[item.Assessmentnumber + 3]}
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          })}
-                        </Fragment>
-                      );
-                    })
-                  : null}
-              </tbody> */}
-            </table>
           </div>
         </Grid>
       </Grid>
@@ -266,7 +229,7 @@ const mapStateToProps = (state) => ({
   studentgrades: state.students.studentgrades,
   studentcourses: state.students.studentcourses,
 
-  newstudentgrade: state.students.newstudentgrade,
+  newstudentgrade: state.students.newstudentgrade
 });
 
 export default connect(mapStateToProps, {

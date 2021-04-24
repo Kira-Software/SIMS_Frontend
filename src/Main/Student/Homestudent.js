@@ -1,42 +1,22 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-} from "@material-ui/core";
-
-import { Link, Redirect } from "react-router-dom";
-
-import axios from "axios";
-
+import { Button } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
-import Header from "../Header/header";
+import { Link, Redirect } from "react-router-dom";
+import Header from "../Header/headerstudent";
 //import {giveapplication} from "../Redux/Action/giveapplication"
 import { loaduserstud } from "../Redux/Action/authentication";
 import {
   getaddsemistercourses,
   getaddtakencourses,
 } from "../Redux/Action/studentaddcourse";
+import { getnewstudentgrade } from "../Redux/Action/studentnewgrade";
+import { studentreadmission } from "../Redux/Action/studentreadmission";
 import {
-  studentwithdrawal,
   getwithdrawal,
+  studentwithdrawal,
 } from "../Redux/Action/studentwithdraw";
 
-import { studentreadmission } from "../Redux/Action/studentreadmission";
+import { getcourseforstudents } from "../Redux/Action/course";
 
 const Homestudent = ({
   isauthenticated,
@@ -48,6 +28,8 @@ const Homestudent = ({
   getwithdrawal,
   withdrawstud,
   studentreadmission,
+  getnewstudentgrade,
+  getcourseforstudents,
 }) => {
   useEffect(() => {
     loaduserstud();
@@ -57,6 +39,12 @@ const Homestudent = ({
   const handleaddbutton = () => {
     getaddsemistercourses(user.Semister);
     getaddtakencourses();
+  };
+
+  const handlestudentstatus = (Year, Semister, Departmentname) => {
+    console.log("the comming parameters are", Year, Semister, Departmentname);
+    getnewstudentgrade(Year, Semister, Departmentname);
+    getcourseforstudents(Departmentname);
   };
 
   const [name, setname] = useState("");
@@ -91,6 +79,9 @@ const Homestudent = ({
             style={{ marginTop: 50, marginLeft: 50 }}
             variant="outlined"
             color="primary"
+            onClick={() =>
+              handlestudentstatus(user.Year, user.Semister, user.Field)
+            }
           >
             {" "}
             Student Status
@@ -227,6 +218,8 @@ export default connect(mapStateToProps, {
   studentwithdrawal,
   getwithdrawal,
   studentreadmission,
+  getnewstudentgrade,
+  getcourseforstudents,
 })(Homestudent);
 
 //export default Homestudent;

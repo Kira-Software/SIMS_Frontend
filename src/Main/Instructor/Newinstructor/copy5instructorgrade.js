@@ -150,7 +150,7 @@ const Instructorgrade = ({
     if (assessment.length < studentscourseregistered.length) {
       //done only in the first time
       let x = studentscourseregistered.length - assessment.length;
-      for (let i = 0; i < x; i++) {
+      for (let i = 0; i < x - 1; i++) {
         let temp = assessment;
         temp.push([]);
         setassessment(temp);

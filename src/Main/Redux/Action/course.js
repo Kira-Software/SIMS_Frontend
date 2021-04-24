@@ -74,6 +74,28 @@ export const getcourses = () => async (dispatch) => {
   }
 };
 
+export const getcourseforstudents = (Departmentname) => async (dispatch) => {
+  //  console.log("inside the getmysurvey action");
+  //dispatch(loaduser());
+  try {
+    const res = await axios.get(`/api/courseforstudents?Departmentname=${Departmentname}`);
+    console.log("the result of givecourse in action is", res.data);
+
+    dispatch({
+      type: GET_COURSES,
+      payload: res.data,
+    });
+
+    // dispatch({
+    //   type: CLEAR_MYSURVEY
+    // });
+    //console.log("the value of res.data after dispatch is ", re);
+  } catch (err) {
+    console.log("there is some error while feching instructors for you");
+    console.error(err.message);
+  }
+};
+
 export const getsemisteredcourses = (Year, Semister) => async (dispatch) => {
   //  console.log("inside the getmysurvey action");
   //dispatch(loaduser());

@@ -28,23 +28,32 @@ import PropTypes from "prop-types";
 import Regheader from "../Header/regheader";
 import Request from "./request";
 import { giveapplication } from "../Redux/Action/giveapplication";
+import { getregistrarapprovalrequests } from "../Redux/Action/departmentgradeaproval";
 
-import Footer from "../Footer/footer"
+import Footer from "../Footer/footer";
 
-
-const Registrar = ({ giveapplication, studapplication, loading }) => {
+const Registrar = ({
+  giveapplication,
+  studapplication,
+  loading,
+  getregistrarapprovalrequests,
+}) => {
   useEffect(() => {
     giveapplication();
   }, []);
 
+  const handleregistrarapproval = () => {
+    getregistrarapprovalrequests();
+  };
+
   return (
     <Fragment>
       <Regheader />
-    
+
       <Badge
         badgeContent={!loading ? studapplication.length : null}
         color="primary"
-        style={{marginTop:50}}
+        style={{ marginTop: 50 }}
       >
         <Link
           to="/request"
@@ -55,7 +64,6 @@ const Registrar = ({ giveapplication, studapplication, loading }) => {
             // marginLeft: 100,
           }}
         >
-         
           <Button
             style={{ marginLeft: 100 }}
             variant="outlined"
@@ -66,19 +74,6 @@ const Registrar = ({ giveapplication, studapplication, loading }) => {
           </Button>
         </Link>
       </Badge>
-
-   
-
-      {/* <Link to="/request" style={{ textDecoration: "none" }}>
-        <Button
-          style={{ marginTop: 50, marginLeft: 100 }}
-          variant="outlined"
-          color="primary"
-        >
-          {" "}
-          Requests
-        </Button>
-      </Link> */}
 
       <Link to="/approved" style={{ textDecoration: "none" }}>
         <Button
@@ -91,14 +86,15 @@ const Registrar = ({ giveapplication, studapplication, loading }) => {
         </Button>
       </Link>
 
-      <Link to="/adddepartment" style={{ textDecoration: "none" }}>
+      <Link to="/registrarapproval" style={{ textDecoration: "none" }}>
         <Button
           style={{ marginTop: 50, marginLeft: 100 }}
           variant="outlined"
           color="primary"
+          onClick={handleregistrarapproval}
         >
           {" "}
-          Add Department
+          Grade Approval Requests
         </Button>
       </Link>
 
@@ -118,6 +114,9 @@ const mapStateToProps = (state) => ({
   // loading: state.survey.loading
 });
 
-export default connect(mapStateToProps, { giveapplication })(Registrar);
+export default connect(mapStateToProps, {
+  giveapplication,
+  getregistrarapprovalrequests,
+})(Registrar);
 
 //export default Registrar;

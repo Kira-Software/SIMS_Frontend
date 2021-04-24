@@ -11,6 +11,7 @@ import {
   GET_ADD_TAKEN_COURSES,
   GET_WITHDRAWAL,
   GET_ALL_COURSES,
+  GET_NEW_STUDENT_GRADE,
 } from "../Action/type";
 
 const initialstate = {
@@ -27,6 +28,7 @@ const initialstate = {
 
   withdrawstud: [],
   allcourses: [],
+  newstudentgrade: [],
 };
 
 export default function (state = initialstate, action) {
@@ -117,6 +119,12 @@ export default function (state = initialstate, action) {
         loading: false,
       };
 
+    case GET_NEW_STUDENT_GRADE:
+      return {
+        ...state,
+        newstudentgrade: payload,
+        loading: false,
+      };
     default:
       return state;
   }

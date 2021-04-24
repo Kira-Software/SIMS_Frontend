@@ -6,7 +6,7 @@ const Regheader = () => {
   return (
     <Fragment>
       <AppBar position="relative">
-        <Toolbar style={{  height: 100 }}>
+        <Toolbar style={{  height: 120 }}>
         <img src="./Images/aastu.jpg" />
 
           <Typography variant="h4">

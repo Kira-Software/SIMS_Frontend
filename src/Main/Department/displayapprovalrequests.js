@@ -1,90 +1,75 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import Header from "../../../Header/header";
-
-import { Typography } from "@material-ui/core";
 import { Fragment } from "react";
+import { Typography } from "@material-ui/core";
+import { connect } from "react-redux";
 
-import { loaduserinstructor } from "../../../Redux/Action/authinstructor";
+import Headerdept from "../Header/headerdept";
+
 import {
-  senddeptapproval,
-  getdeptapproval,
-} from "../../../Redux/Action/instructorgradeapproval";
+  sendregistrarapproval,
+  getregistrarapproval,
+} from "../Redux/Action/instructorgradeapproval";
 
-const Rresultsummary = ({
+const Displaygraderequests = ({
   user,
   studentid,
   markonly,
   attendanceheader,
   tempjob,
-  loaduserinstructor,
-  senddeptapproval,
-  approvalrequest,
+  Instructorid,
+  sendregistrarapproval,
+  departmentrequest,
   loading,
-  instructorassessment,
+  getregistrarapproval,
+  departmentapprovalrequests,
 }) => {
-  useEffect(() => {
-    loaduserinstructor();
-  }, []);
-
-  const submitdeptapproval = (
+  const submittoregapproval = (
     Departmentname,
     Year,
     Semister,
     Section,
     Coursename,
-    Instructorname,
-    Assessmentnumber
+    Instructorid
   ) => {
     //some code here
-    console.log(
-      "the coming parameters are ",
+    // console.log(
+    //   "the coming parameters are ",
+    //   Departmentname,
+    //   Year,
+    //   Semister,
+    //   Section,
+    //   Coursename,
+    //   Instructorid
+    // );
+
+    sendregistrarapproval(
       Departmentname,
       Year,
       Semister,
       Section,
       Coursename,
-      Instructorname,
-      Assessmentnumber
+      Instructorid
     );
 
-    senddeptapproval(
+    getregistrarapproval(
       Departmentname,
       Year,
       Semister,
       Section,
       Coursename,
-      Instructorname,
-      Assessmentnumber
+      Instructorid
     );
   };
 
-  let flag = "none";
+  let assessmentcount = 0;
 
-  let btnstyle = {
-    display: flag,
-  };
-
-  let countassessment = 0;
   return (
-    <>
-      <Header name={user !== null ? user.Instructorfname : null} />
+    <Fragment>
+      <Headerdept name={user !== null ? user.Departmentname : null} />
       <div className="card" style={{ marginTop: 50, marginBottom: 100 }}>
         <h3 className="card-header text-center font-weight-bold text-uppercase py-4">
-          Result Summary
+          Department Result Summary
         </h3>
-
-        {loading
-          ? null
-          : instructorassessment.length !== 0
-          ? instructorassessment.map((item, idx) => {
-              countassessment =
-                item.Quiz.length +
-                item.Assignment.length +
-                item.Project.length +
-                item.Attendance.length;
-            })
-          : null}
 
         {attendanceheader.length !== 0 ? (
           <div>
@@ -104,11 +89,11 @@ const Rresultsummary = ({
               <Typography color="primary">
                 <strong>Course name: {tempjob}</strong>
               </Typography>
-              <Typography color="primary">
+              {/* <Typography color="primary">
                 <strong>
                   Instructor name: {user.Instructorfname} {user.Instructormname}
                 </strong>
-              </Typography>
+              </Typography> */}
             </div>
           </div>
         ) : null}
@@ -125,29 +110,35 @@ const Rresultsummary = ({
               </tr>
             </thead>
             <tbody>
-              {markonly.length !== 0 &&
-              studentid.length !== 0 &&
-              countassessment !== 0 ? (
+              {markonly.length !== 0 && studentid.length !== 0 ? (
                 markonly.map((individualmark, individualmarkidx) => {
                   return (
                     <Fragment key={individualmarkidx}>
+                      {departmentapprovalrequests.length !== 0 &&
+                      attendanceheader.length !== 0 &&
+                      tempjob !== null &&
+                      Instructorid !== null
+                        ? departmentapprovalrequests.map((item, idx) => {
+                            if (
+                              item.Year === attendanceheader[0] &&
+                              item.Semister === attendanceheader[1] &&
+                              item.Section === attendanceheader[2] &&
+                              item.Coursename === tempjob
+                            ) {
+                              assessmentcount = item.Assessmentnumber;
+                            }
+                          })
+                        : null}
+
                       {studentid.map((individualid, individualididx) => {
-                        // console.log(
-                        //   "studentid iteration loop",
-                        //   individualididx + 1
-                        // );
                         if (
-                          individualmark[countassessment + 4] ===
+                          individualmark[assessmentcount + 4] ===
                           individualid.Studid
                         ) {
-                          console.log(
-                            "the value of countassessment is ",
-                            countassessment
-                          );
                           return (
                             <tr key={individualididx}>
                               <td>{individualid.Id}</td>
-                              <td>{individualmark[countassessment + 3]}</td>
+                              <td>{individualmark[assessmentcount + 3]}</td>
                             </tr>
                           );
                         }
@@ -156,33 +147,28 @@ const Rresultsummary = ({
                       {individualmarkidx === markonly.length - 1 &&
                       attendanceheader.length !== 0 &&
                       tempjob !== null &&
+                      Instructorid !== null &&
                       user.length !== 0 ? (
                         <tr>
                           <td colSpan="2">
                             <button
                               className="btn btn-warning btn-rounded"
                               disabled={
-                                approvalrequest.length === 0 ? false : true
+                                departmentrequest.length === 0 ? false : true
                               }
                               onClick={() =>
-                                submitdeptapproval(
-                                  user.Department,
+                                submittoregapproval(
+                                  user.Departmentname,
                                   attendanceheader[0],
                                   attendanceheader[1],
                                   attendanceheader[2],
                                   tempjob,
-                                  user.Instructorfname +
-                                    " " +
-                                    user.Instructormname +
-                                    " " +
-                                    user.Instructorlname +
-                                    " ",
-                                  countassessment
+                                  Instructorid
                                 )
                               }
                             >
                               {loading ===
-                              true ? null : approvalrequest.length === 0 ? (
+                              true ? null : departmentrequest.length === 0 ? (
                                 <span>Submit for approval</span>
                               ) : (
                                 <span>Submitted for approval </span>
@@ -207,7 +193,7 @@ const Rresultsummary = ({
           </table>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
@@ -217,12 +203,13 @@ const mapStateToProps = (state) => ({
   markonly: state.instructor.markonly,
   attendanceheader: state.instructor.attendanceheader,
   tempjob: state.instructor.tempjob,
-  approvalrequest: state.instructor.approvalrequest,
-  loading: state.instructor.loading,
-  instructorassessment: state.instructor.instructorassessment,
+  Instructorid: state.department.Instructorid,
+  departmentrequest: state.department.departmentrequest,
+  loading: state.department.loading,
+  departmentapprovalrequests: state.department.departmentapprovalrequests,
 });
 
 export default connect(mapStateToProps, {
-  loaduserinstructor,
-  senddeptapproval,
-})(Rresultsummary);
+  sendregistrarapproval,
+  getregistrarapproval,
+})(Displaygraderequests);

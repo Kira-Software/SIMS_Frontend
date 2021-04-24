@@ -46,11 +46,9 @@ export const addassessment = (
 
     console.log(res);
 
-    dispatch(setalert(["Document updated successfully"],"done"))
+    dispatch(setalert(["Document updated successfully"], "done"));
 
     dispatch(getassessment());
-
-
   } catch (err) {
     //  console.log("i am in login catch");
     //console.log("the main error is that ", err.response.data.errors);
@@ -124,7 +122,6 @@ export const setmark = (
 
     console.log(res);
     dispatch(getmark(Coursename, Year, Semister, Section));
-
   } catch (err) {
     //  console.log("i am in login catch");
     //console.log("the main error is that ", err.response.data.errors);
@@ -182,3 +179,96 @@ export const getmark = (Coursename, Year, Semister, Section) => async (
     console.error(err.message);
   }
 };
+
+export const getmarkfordept = (
+  Coursename,
+  Year,
+  Semister,
+  Section,
+  Instructorid
+) => async (dispatch) => {
+  console.log("inside of the getmarkfordept action");
+  console.log(
+    "the accepted parameters are ",
+    Coursename,
+    Year,
+    Semister,
+    Section,
+    Instructorid
+  );
+
+  //dispatch(loaduser());
+  try {
+    const res = await axios.get(
+      `/api/instructormarkfordept?Coursename=${Coursename}&Year=${Year}&Semister=${Semister}&Section=${Section}&Instructorid=${Instructorid}`
+    );
+    console.log("the result of getmark in action is", res.data);
+
+    dispatch({
+      type: GET_INSTRUCTOR_MARK,
+      payload: res.data,
+    });
+
+    res.data.map((data, dataidx) => {
+      dispatch({
+        type: SET_MARK_ONLY,
+        payload: data.Assessment,
+      });
+    });
+
+    // dispatch({
+    //   type: CLEAR_MYSURVEY
+    // });
+    //console.log("the value of res.data after dispatch is ", re);
+  } catch (err) {
+    console.log("there is some error while getting mark");
+    console.error(err.message);
+  }
+};
+
+export const getmarkforregistrar = (
+  Coursename,
+  Year,
+  Semister,
+  Section,
+  Instructorid
+) => async (dispatch) => {
+  console.log("inside of the getmarkfordept action");
+  console.log(
+    "the accepted parameters are ",
+    Coursename,
+    Year,
+    Semister,
+    Section,
+    Instructorid
+  );
+
+  //dispatch(loaduser());
+  try {
+    const res = await axios.get(
+      `/api/instructormarkforregistrar?Coursename=${Coursename}&Year=${Year}&Semister=${Semister}&Section=${Section}&Instructorid=${Instructorid}`
+    );
+    console.log("the result of getmark in action is", res.data);
+
+    dispatch({
+      type: GET_INSTRUCTOR_MARK,
+      payload: res.data,
+    });
+
+    res.data.map((data, dataidx) => {
+      dispatch({
+        type: SET_MARK_ONLY,
+        payload: data.Assessment,
+      });
+    });
+
+    // dispatch({
+    //   type: CLEAR_MYSURVEY
+    // });
+    //console.log("the value of res.data after dispatch is ", re);
+  } catch (err) {
+    console.log("there is some error while getting mark");
+    console.error(err.message);
+  }
+};
+

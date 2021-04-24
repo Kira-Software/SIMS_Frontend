@@ -8,6 +8,7 @@ import {
   SET_ATTENDANCE_HEADER,
   SET_MARK_ONLY,
   GET_STUDENT_ID,
+  GET_APPROVAL_REQUEST,
 } from "../Action/type";
 
 const initialstate = {
@@ -20,6 +21,7 @@ const initialstate = {
   attendanceheader: [],
   markonly: [],
   studentid: [],
+  approvalrequest: [],
 };
 
 export default function (state = initialstate, action) {
@@ -85,6 +87,13 @@ export default function (state = initialstate, action) {
       return {
         ...state,
         studentid: payload,
+        loading: false,
+      };
+
+    case GET_APPROVAL_REQUEST:
+      return {
+        ...state,
+        approvalrequest: payload,
         loading: false,
       };
 

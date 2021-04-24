@@ -21,6 +21,7 @@ import {
 import { getstudentid } from "../Redux/Action/selectstudents";
 import Gradingsystem from "./Pagecomponents/Gradingsystem/gradingsystem";
 import Rassessmentweight from "./Pagecomponents/Regular/Rassessmentweight";
+import { getdeptapproval } from "../Redux/Action/instructorgradeapproval";
 
 const Homeinstructor = ({
   isauthenticated,
@@ -38,6 +39,7 @@ const Homeinstructor = ({
   updateattendanceheader,
   getstudentid,
   studentid,
+  getdeptapproval,
 }) => {
   useEffect(() => {
     loaduserinstructor();
@@ -224,6 +226,7 @@ const Homeinstructor = ({
     updatetempjob(Coursename);
     getassessment();
     getmark(Coursename, Year, Semister, Section);
+    getdeptapproval(Department, Year, Semister, Section, Coursename);
   };
 
   const handleinstructorattendance = (
@@ -249,13 +252,21 @@ const Homeinstructor = ({
     Section,
     Coursename
   ) => {
-    console.log("inside of the local attendance method");
+    console.log(
+      "inside of the local attendance method",
+      Department,
+      Year,
+      Semister,
+      Section,
+      Coursename
+    );
     // getinstructorstudentgrade(Department, Year, Semister, Section);
     // getstudentscourseregistered(Department, Year, Semister, Section);
     updatetempjob(Coursename);
     updateattendanceheader(Year, Semister, Section);
     //getassessment();
     getmark(Coursename, Year, Semister, Section);
+    getdeptapproval(Department, Year, Semister, Section, Coursename);
   };
 
   const [formdata, setformdata] = useState({
@@ -420,14 +431,12 @@ const Homeinstructor = ({
                   <li style={allregularstyle}>
                     {" "}
                     <button
-                     // onClick={() => handleregularresultsummary(user._id)}
+                      // onClick={() => handleregularresultsummary(user._id)}
                       className="btn btn-secondary btn-rounded"
                     >
                       Special entry
                     </button>{" "}
                   </li>
-
-                  
                 </ul>
               </li>
 
@@ -521,8 +530,9 @@ const Homeinstructor = ({
             <Typography variant="h6" color="primary" style={{ margin: 50 }}>
               Choose a section for the result summary
             </Typography>
-            {instructorjob.length !== null
-              ? instructorjob.map((item, idx) => {
+            {instructorjob.length !== null ? (
+              <Fragment>
+                {instructorjob.map((item, idx) => {
                   return (
                     <div style={{ marginLeft: 200 }} key={idx}>
                       <div> Year : {item.Year}</div>
@@ -550,10 +560,19 @@ const Homeinstructor = ({
                         </Button>
                       </Link>
                       <br></br> <hr></hr> <br></br>
+                      {/* {idx === instructorjob.length - 1 ? (
+                        <button
+                          className="btn btn-warning btn-rounded"
+                          style={{ marginLeft: 300 }}
+                        >
+                          Submit for approval
+                        </button>
+                      ) : null} */}
                     </div>
                   );
-                })
-              : null}
+                })}
+              </Fragment>
+            ) : null}
           </div>
 
           <div style={{ display: displaystudentattendance }}>
@@ -634,6 +653,7 @@ export default connect(mapStateToProps, {
   getmark,
   updateattendanceheader,
   getstudentid,
+  getdeptapproval,
 })(Homeinstructor);
 
 //export default Homeinstructor;
