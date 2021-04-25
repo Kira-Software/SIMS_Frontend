@@ -17,6 +17,7 @@ const Assigncourse = ({
   getcourses,
   loaduserstud,
   newstudentgrade,
+  courses,
 }) => {
   useEffect(() => {
     loaduserstud();
@@ -25,6 +26,8 @@ const Assigncourse = ({
   const [displaycourse, setdisplaycourse] = useState("none");
   const [displaygrade, setdisplaygrade] = useState("none");
   const [displaystatus, setdisplaystatus] = useState("none");
+
+  const [newgpa, setnewgpa] = useState([]);
 
   const handledisplaycourse = (id) => {
     if (displaycourse === "none") {
@@ -48,16 +51,90 @@ const Assigncourse = ({
     }
   };
 
+  const gradecalculator = (Grade, Credithour) => {
+    let value;
+    if (Grade === "A+") {
+      value = 4 * Credithour;
+    } else if (Grade === "A") {
+      value = 4 * Credithour;
+    } else if (Grade === "A-") {
+      value = 3.75 * Credithour;
+    } else if (Grade === "B+") {
+      value = 3.5 * Credithour;
+    } else if (Grade === "B") {
+      value = 3 * Credithour;
+    } else if (Grade === "B-") {
+      value = 2.75 * Credithour;
+    } else if (Grade === "C+") {
+      value = 2.5 * Credithour;
+    } else if (Grade === "C") {
+      value = 2 * Credithour;
+    } else if (Grade === "C-") {
+      value = 1.75 * Credithour;
+    } else if (Grade === "D") {
+      value = 1 * Credithour;
+    } else if (Grade === "F") {
+      value = 0 * Credithour;
+    }
+
+    return value;
+  };
+
   const handledisplaystatus = (id) => {
     if (displaystatus === "none") {
       getgrades(id);
       setdisplaygrade("none");
       setdisplaycourse("none");
       setdisplaystatus("block");
+
+      if (gradestatus.length !== 0) {
+        let allcredithour = 0;
+        let allmultiplied = 0;
+        gradestatus.map((item, itemidx) => {
+          let totalcredithour = 0;
+          let totalmultiplied = 0;
+          item.map((eachitem, eachitemidx) => {
+            if (eachitemidx > 1) {
+              courses.map((course, courseidx) => {
+                if (eachitem === course.Coursename) {
+                  let topush = gradecalculator(
+                    item[eachitemidx + 1],
+                    course.Credithour
+                  );
+                  totalcredithour = totalcredithour + course.Credithour;
+                  totalmultiplied = totalmultiplied + topush;
+
+                  allcredithour = allcredithour + course.Credithour;
+                  allmultiplied = allmultiplied + topush;
+                }
+              });
+            }
+            if (eachitemidx === item.length - 1) {
+              console.log(
+                "the total multiplied value is ",
+                totalmultiplied,
+                " and total credithour is ",
+                totalcredithour
+              );
+              let GPA = totalmultiplied / totalcredithour;
+              let CGPA = allmultiplied / allcredithour;
+
+              item.push(GPA);
+              //  item.push("")
+              item.push(CGPA);
+            }
+          });
+        });
+      }
+      console.log("the final grade status value is ", gradestatus);
+      setnewgpa(gradestatus);
     } else {
       setdisplaystatus("none");
     }
   };
+
+  let gradestatus = [];
+  let gradegpa = [];
   return (
     <Fragment>
       <Header name={user !== null ? user.Firstname : null} />
@@ -198,7 +275,55 @@ const Assigncourse = ({
 
           <div style={{ display: displaystatus }}>
             <h3>display status section</h3>
+            {newstudentgrade.length !== 0
+              ? newstudentgrade.map((item, itemidx) => {
+                  item.Assessment.map((individual, individualidx) => {
+                    if (individual[item.Assessmentnumber + 4] === user._id) {
+                      if (gradestatus.length === 0) {
+                        gradestatus.push([
+                          item.Year,
+                          item.Semister,
+                          item.Coursename,
+                          individual[item.Assessmentnumber + 3],
+                        ]);
+                        console.log(
+                          "the value of gradestatus is ",
+                          gradestatus
+                        );
+                      } else {
+                        gradestatus.map((data, dataidx) => {
+                          let done = false;
+                          if (
+                            data[0] === item.Year &&
+                            data[1] === item.Semister
+                          ) {
+                            data.push(
+                              item.Coursename,
+                              individual[item.Assessmentnumber + 3]
+                            );
+                            done = true;
+                          } else if (
+                            dataidx === gradestatus.length - 1 &&
+                            done === false
+                          ) {
+                            gradestatus.push([
+                              item.Year,
+                              item.Semister,
+                              item.Coursename,
+                              individual[item.Assessmentnumber + 3],
+                            ]);
+                          }
+                        });
 
+                        console.log(
+                          "the value of gradestatus is ",
+                          gradestatus
+                        );
+                      }
+                    }
+                  });
+                })
+              : null}
             <div className="card" style={{ marginTop: 50, marginBottom: 100 }}>
               <h3 className="card-header text-center font-weight-bold text-uppercase py-4">
                 Student Status
@@ -215,32 +340,20 @@ const Assigncourse = ({
                   {/* <th>Credithour</th> */}
                 </tr>
               </thead>
-              {/* <tbody>
-                {newstudentgrade.length !== 0
-                  ? newstudentgrade.map((item, itemidx) => {
+              <tbody>
+                {newgpa.length !== 0
+                  ? newgpa.map((item, itemidx) => {
                       return (
-                        <Fragment key={itemidx}>
-                          {item.Assessment.map((individual, individualidx) => {
-                            if (
-                              individual[item.Assessmentnumber + 4] === user._id
-                            ) {
-                              return (
-                                <tr key={individualidx}>
-                                  <td>{item.Year}</td>
-                                  <td>{item.Semister}</td>
-                                  <td>{item.Coursename}</td>
-                                  <td>
-                                    {individual[item.Assessmentnumber + 3]}
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          })}
-                        </Fragment>
+                        <tr key={itemidx}>
+                          <th>{item[0]}</th>
+                          <th>{item[1]}</th>
+                          <th>{item[item.length - 2]}</th>
+                          <th>{item[item.length - 1]}</th>
+                        </tr>
                       );
                     })
                   : null}
-              </tbody> */}
+              </tbody>
             </table>
           </div>
         </Grid>
@@ -258,9 +371,9 @@ const mapStateToProps = (state) => ({
   // loading: state.reducer.loading,
   // loading: state.survey.loading
   //   user: state.authreducer.user,
-  //   courses: state.course.courses,
   //   loading: state.course.loading,
   // assignedcourses: state.course.assignedcourses
+  courses: state.course.courses,
   user: state.authreducer.user,
   isauthenticated: state.authreducer.isauthenticated,
   studentgrades: state.students.studentgrades,

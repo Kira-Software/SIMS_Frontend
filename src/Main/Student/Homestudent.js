@@ -38,7 +38,7 @@ const Homestudent = ({
 
   const handleaddbutton = () => {
     getaddsemistercourses(user.Semister);
-    getaddtakencourses();
+    getaddtakencourses(); 
   };
 
   const handlestudentstatus = (Year, Semister, Departmentname) => {
