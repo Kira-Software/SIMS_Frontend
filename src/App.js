@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./Main/Redux/Store/store";
+
 import Application from "./Main/Student/application";
 import Registrar from "./Main/Registrar/registrar";
 import Headerlogin from "./Main/Header/headerlogin";
@@ -13,6 +14,8 @@ import Request from "./Main/Registrar/request";
 import Approved from "./Main/Registrar/approved";
 import Registrarapproval from "./Main/Registrar/registrarapproval";
 import Displayregistrarapproval from "./Main/Registrar/displayregistrarapproval";
+import Academiccalendar from "./Main/Registrar/academiccalendar";
+import Showcalendar from "./Main/Registrar/showcalendar";
 
 import Loging from "./Main/Student/login";
 import Homestudent from "./Main/Student/Homestudent";
@@ -89,6 +92,17 @@ function App() {
             path="/displayregistrarapproval"
             exact
             component={Displayregistrarapproval}
+          />
+          <Privateroute
+            path="/academiccalendar"
+            exact
+            component={Academiccalendar}
+          />
+
+          <Privateroute
+            path="/showcalendar"
+            exact
+            component={Showcalendar}
           />
 
           <Route path="/login" exact component={Loging} />

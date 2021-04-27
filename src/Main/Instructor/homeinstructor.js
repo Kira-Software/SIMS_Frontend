@@ -437,6 +437,16 @@ const Homeinstructor = ({
                       Special entry
                     </button>{" "}
                   </li>
+
+                  <li style={allregularstyle}>
+                    <button
+                      //onClick={handlespecialli}
+                      className="btn btn-secondary btn-rounded"
+                      //style={{ marginTop: 10 }}
+                    >
+                      Regrading
+                    </button>
+                  </li>
                 </ul>
               </li>
 
@@ -467,15 +477,6 @@ const Homeinstructor = ({
                   style={{ marginTop: 10 }}
                 >
                   Student Attendance
-                </button>
-              </li>
-              <li>
-                <button
-                  //onClick={handlespecialli}
-                  className="btn btn-success btn-rounded"
-                  style={{ marginTop: 10 }}
-                >
-                  Regrading
                 </button>
               </li>
             </ul>

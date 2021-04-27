@@ -5,6 +5,7 @@ import {
   GET_FINAL_APPROVAL_REQUEST,
   CLEAR_FINAL_APPROVAL_REQUEST,
   GET_DEPARTMENT_NAME,
+  GET_CALENDAR
 } from "../Action/type";
 
 const initialstate = {
@@ -14,6 +15,8 @@ const initialstate = {
   registrarrequest: [],
   finalapproved: [],
   departmentname: null,
+  calendar: []
+  
 };
 
 export default function (state = initialstate, action) {
@@ -48,12 +51,12 @@ export default function (state = initialstate, action) {
         departmentname: payload,
         loading: false,
       };
-    //   case SET_INSTRUCTOR_ID:
-    //     return {
-    //       ...state,
-    //       Instructorid: payload,
-    //       loading: false,
-    //     };
+      case GET_CALENDAR:
+        return {
+          ...state,
+          calendar: payload,
+          loading: false,
+        };
 
     //     case GET_REGISTRAR_APPROVAL_REQUEST:
     //       return {

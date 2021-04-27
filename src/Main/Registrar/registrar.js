@@ -64,38 +64,70 @@ const Registrar = ({
             // marginLeft: 100,
           }}
         >
-          <Button
-            style={{ marginLeft: 100 }}
-            variant="outlined"
-            color="primary"
+          <button
+            style={{ marginLeft: 50 }}
+            // variant="contained"
+            // color="secondary"
+            className="btn btn-warning"
           >
             {" "}
-            Requests
-          </Button>
+            Student Request
+          </button>
         </Link>
       </Badge>
 
       <Link to="/approved" style={{ textDecoration: "none" }}>
-        <Button
-          style={{ marginTop: 50, marginLeft: 100 }}
-          variant="outlined"
-          color="primary"
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
         >
           {" "}
-          Approved
-        </Button>
+          Approved Students
+        </button>
       </Link>
 
       <Link to="/registrarapproval" style={{ textDecoration: "none" }}>
-        <Button
-          style={{ marginTop: 50, marginLeft: 100 }}
-          variant="outlined"
-          color="primary"
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+          // variant="outlined"
+          // color="primary"
           onClick={handleregistrarapproval}
         >
           {" "}
           Grade Approval Requests
-        </Button>
+        </button>
+      </Link>
+
+      <Link to="/academiccalendar" style={{ textDecoration: "none" }}>
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
+          // onClick={handleregistrarapproval}
+        >
+          {" "}
+          Create Academic Calendar
+        </button>
+      </Link>
+
+      <Link to="/showcalendar" style={{ textDecoration: "none" }}>
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
+          // onClick={handleregistrarapproval}
+        >
+          {" "}
+          Academic Calendar Report
+        </button>
       </Link>
 
       <Footer />
