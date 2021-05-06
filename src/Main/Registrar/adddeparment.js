@@ -1,33 +1,11 @@
-import React, { Fragment, useState, useEffect } from "react";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  FormControl,
-  Grid,
-  Button,
-  TextField,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormGroup,
-  Checkbox,
-} from "@material-ui/core";
-
-import { Link, Redirect } from "react-router-dom";
-
-import axios from "axios";
-
+import { Button, FormControl, Paper, TextField } from "@material-ui/core";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-// import PropTypes from "prop-types";
-
-import Regheader from "../Header/regheader";
-import { adddepartment } from "../Redux/Action/department";
 //import {giveapplication} from "../Redux/Action/giveapplication"
 import Footer from "../Footer/footer";
+// import PropTypes from "prop-types";
+import Regheader from "../Header/regheader";
+import { adddepartment } from "../Redux/Action/department";
 
 const Adddepartment = ({ adddepartment }) => {
   // useEffect(() => {

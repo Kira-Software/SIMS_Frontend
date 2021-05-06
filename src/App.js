@@ -28,6 +28,10 @@ import Studentstaff from "./Main/Department/Studentstaff";
 import Instructorstaff from "./Main/Department/instructorstaff";
 import Gradeapproval from "./Main/Department/gradeapproval";
 import Displaygraderequests from "./Main/Department/displayapprovalrequests";
+import Registrarregrading from "./Main/Registrar/registrarregrading";
+import Registrarspecial from "./Main/Registrar/registrarspecial";
+import Accountmanagement from "./Main/Registrar/accountmanagement";
+
 
 import Courseregistration from "./Main/Student/courseregistration";
 
@@ -35,6 +39,8 @@ import Loginforinstructor from "./Main/Instructor/login";
 import Homeinstructor from "./Main/Instructor/homeinstructor";
 import Instructorgrade from "./Main/Instructor/instructorgrade";
 import Rresultsummary from "./Main/Instructor/Pagecomponents/Regular/Rresultsummary";
+import Instructorregrading from "./Main/Instructor/instructorregrading";
+import Instructorspecialentry from "./Main/Instructor/instructorspecialentry";
 
 import Studentstatus from "./Main/Student/studentstatus";
 import Addcourse from "./Main/Student/addcourse";
@@ -99,11 +105,17 @@ function App() {
             component={Academiccalendar}
           />
 
+          <Privateroute path="/showcalendar" exact component={Showcalendar} />
+
           <Privateroute
-            path="/showcalendar"
+            path="/registrarregrading"
             exact
-            component={Showcalendar}
+            component={Registrarregrading}
           />
+
+          <Route path="/registrarspecial" exact component={Registrarspecial} />
+          <Route path="/accountmanagement" exact component={Accountmanagement} />
+
 
           <Route path="/login" exact component={Loging} />
           <Route path="/homestudent" exact component={Homestudent} />
@@ -129,6 +141,16 @@ function App() {
           <Route path="/logininstructor" exact component={Loginforinstructor} />
           <Route path="/homeinstructor" exact component={Homeinstructor} />
           <Route path="/instructorgrade" exact component={Instructorgrade} />
+          <Route
+            path="/instructorregrading"
+            exact
+            component={Instructorregrading}
+          />
+          <Route
+            path="/instructorspecialentry"
+            exact
+            component={Instructorspecialentry}
+          />
 
           {/* new routes for instructors */}
           <Route

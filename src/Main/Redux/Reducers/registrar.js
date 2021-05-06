@@ -5,7 +5,9 @@ import {
   GET_FINAL_APPROVAL_REQUEST,
   CLEAR_FINAL_APPROVAL_REQUEST,
   GET_DEPARTMENT_NAME,
-  GET_CALENDAR
+  GET_CALENDAR,
+  GET_REGRADING,
+  GET_SPECIAL_ENTRY,
 } from "../Action/type";
 
 const initialstate = {
@@ -15,8 +17,9 @@ const initialstate = {
   registrarrequest: [],
   finalapproved: [],
   departmentname: null,
-  calendar: []
-  
+  calendar: [],
+  regradinglist: [],
+  specialentrylist: [],
 };
 
 export default function (state = initialstate, action) {
@@ -51,19 +54,26 @@ export default function (state = initialstate, action) {
         departmentname: payload,
         loading: false,
       };
-      case GET_CALENDAR:
-        return {
-          ...state,
-          calendar: payload,
-          loading: false,
-        };
+    case GET_CALENDAR:
+      return {
+        ...state,
+        calendar: payload,
+        loading: false,
+      };
 
-    //     case GET_REGISTRAR_APPROVAL_REQUEST:
-    //       return {
-    //         ...state,
-    //         departmentrequest: payload,
-    //         loading: false,
-    //       };
+    case GET_REGRADING:
+      return {
+        ...state,
+        regradinglist: payload,
+        loading: false,
+      };
+
+    case GET_SPECIAL_ENTRY:
+      return {
+        ...state,
+        specialentrylist: payload,
+        loading: false,
+      };
 
     default:
       return state;

@@ -78,3 +78,8 @@ export const GET_DEPARTMENT_NAME = "  GET_DEPARTMENT_NAME";
 
 export const GET_CALENDAR = "  GET_CALENDAR";
 
+export const GET_REGRADING = "  GET_REGRADING";
+export const GET_SPECIAL_ENTRY = "  GET_SPECIAL_ENTRY";
+
+
+

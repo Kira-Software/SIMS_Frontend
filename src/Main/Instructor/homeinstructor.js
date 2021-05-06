@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import React, { Fragment, useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import Footer from "../Footer/footer";
 import Header from "../Header/header";
@@ -22,6 +22,9 @@ import { getstudentid } from "../Redux/Action/selectstudents";
 import Gradingsystem from "./Pagecomponents/Gradingsystem/gradingsystem";
 import Rassessmentweight from "./Pagecomponents/Regular/Rassessmentweight";
 import { getdeptapproval } from "../Redux/Action/instructorgradeapproval";
+import { getinstructorregrading } from "../Redux/Action/regrading";
+import { getinstructorspecialentry } from "../Redux/Action/specialentry";
+
 
 const Homeinstructor = ({
   isauthenticated,
@@ -47,6 +50,9 @@ const Homeinstructor = ({
     //  getinstructorjob(user._id);
     //}
   }, []);
+
+  const dispatch = useDispatch();
+  const regradinglist = useSelector((state) => state.registrar.regradinglist);
 
   const [job, setjob] = useState("none");
   const [mark, setmark] = useState("none");
@@ -80,12 +86,16 @@ const Homeinstructor = ({
   const [displaystudentattendance, setdisplaystudentattendance] = useState(
     "none"
   );
+  const [displayregrading, setdisplayregrading] = useState("none");
+  const [displayspecialentry, setdisplayspecialentry] = useState("none");
 
   const handleregularli = () => {
     if (regularlistyle === "none") {
       setregularlistyle("block");
       setspeciallistyle("none");
       getstudentid();
+
+      dispatch(getinstructorspecialentry());
       //setdisplaygradingsystem("none")
     } else {
       setregularlistyle("none");
@@ -110,6 +120,8 @@ const Homeinstructor = ({
       setdisplayrassessmentweight("block");
       setdisplaygradingsystem("none");
       setdisplaystudentattendance("none");
+      setdisplayregrading("none");
+      setdisplayspecialentry("none");
     } else {
       setdisplayrassessmentweight("none");
     }
@@ -125,6 +137,8 @@ const Homeinstructor = ({
       setdisplayrassessmentweight("none");
       setdisplaygradingsystem("none");
       setdisplaystudentattendance("none");
+      setdisplayregrading("none");
+      setdisplayspecialentry("none");
     } else {
       setjob("none");
     }
@@ -143,6 +157,8 @@ const Homeinstructor = ({
       setdisplayrassessmentweight("none");
       setdisplaygradingsystem("none");
       setdisplaystudentattendance("none");
+      setdisplayregrading("none");
+      setdisplayspecialentry("none");
     } else {
       setdisplayrresultsummary("none");
     }
@@ -173,6 +189,8 @@ const Homeinstructor = ({
       //setdisplayinstructorcourses("none");
       setdisplaystudentattendance("none");
       setdisplaygradingsystem("block");
+      setdisplayregrading("none");
+      setdisplayspecialentry("none");
     } else {
       setdisplaygradingsystem("none");
     }
@@ -194,11 +212,56 @@ const Homeinstructor = ({
       // setdisplayinstructorcourses("none");
       setdisplaygradingsystem("none");
       setdisplaystudentattendance("block");
+      setdisplayregrading("none");
+      setdisplayspecialentry("none");
     } else {
       setdisplaystudentattendance("none");
     }
   };
 
+  const hanlderegrading = (id) => {
+    if (displayregrading === "none") {
+      setjob("none");
+      getinstructorjob(id);
+
+      setdisplayrassessmentweight("none");
+      setdisplayrresultsummary("none");
+
+      setdisplaysassessmententry("none");
+      setdisplaysassessmentweight("none");
+      setdisplaysresultsummary("none");
+
+      //setdisplayinstructorcourses("none");
+      setdisplaystudentattendance("none");
+      setdisplaygradingsystem("none");
+      setdisplayregrading("block");
+      setdisplayspecialentry("none");
+    } else {
+      setdisplayregrading("none");
+    }
+  };
+
+  const handlespecialentry = (id) => {
+    if (displayspecialentry === "none") {
+      getinstructorjob(id);
+
+      setjob("none");
+      setdisplayrassessmentweight("none");
+      setdisplayrresultsummary("none");
+
+      setdisplaysassessmententry("none");
+      setdisplaysassessmentweight("none");
+      setdisplaysresultsummary("none");
+
+      //setdisplayinstructorcourses("none");
+      setdisplaystudentattendance("none");
+      setdisplaygradingsystem("none");
+      setdisplayregrading("none");
+      setdisplayspecialentry("block");
+    } else {
+      setdisplaygradingsystem("none");
+    }
+  };
   // const handleinstructorcourses = () => {};
   // const handlestudentattendance = () => {};
 
@@ -227,6 +290,7 @@ const Homeinstructor = ({
     getassessment();
     getmark(Coursename, Year, Semister, Section);
     getdeptapproval(Department, Year, Semister, Section, Coursename);
+    // dispatch(getinstructorregrading());
   };
 
   const handleinstructorattendance = (
@@ -284,73 +348,73 @@ const Homeinstructor = ({
   };
   let allsum = Final;
 
-  const handledoneclassification = () => {
-    // console.log(
-    //   "the values respectively are",
-    //   Quiz,
-    //   Assignment,
-    //   Project,
-    //   Attendance,
-    //   Final
-    // );
+  // const handledoneclassification = () => {
+  //   // console.log(
+  //   //   "the values respectively are",
+  //   //   Quiz,
+  //   //   Assignment,
+  //   //   Project,
+  //   //   Attendance,
+  //   //   Final
+  //   // );
 
-    let tempquiz = Quiz.split(",");
-    let tempAssignment = Assignment.split(",");
-    let tempproject = Project.split(",");
-    let tempattendance = Attendance.split(",");
-    console.log(
-      "the new splitted valueis ",
-      tempquiz,
-      tempAssignment,
-      tempproject,
-      tempattendance,
-      Final
-    );
+  //   let tempquiz = Quiz.split(",");
+  //   let tempAssignment = Assignment.split(",");
+  //   let tempproject = Project.split(",");
+  //   let tempattendance = Attendance.split(",");
+  //   console.log(
+  //     "the new splitted valueis ",
+  //     tempquiz,
+  //     tempAssignment,
+  //     tempproject,
+  //     tempattendance,
+  //     Final
+  //   );
 
-    var quizsum = tempquiz.reduce(function (a, b) {
-      a *= 1;
-      b *= 1;
-      return a + b;
-    }, 0);
+  //   var quizsum = tempquiz.reduce(function (a, b) {
+  //     a *= 1;
+  //     b *= 1;
+  //     return a + b;
+  //   }, 0);
 
-    var assignmentsum = tempAssignment.reduce(function (a, b) {
-      a *= 1;
-      b *= 1;
-      return a + b;
-    }, 0);
+  //   var assignmentsum = tempAssignment.reduce(function (a, b) {
+  //     a *= 1;
+  //     b *= 1;
+  //     return a + b;
+  //   }, 0);
 
-    var projectsum = tempproject.reduce(function (a, b) {
-      a *= 1;
-      b *= 1;
-      return a + b;
-    }, 0);
+  //   var projectsum = tempproject.reduce(function (a, b) {
+  //     a *= 1;
+  //     b *= 1;
+  //     return a + b;
+  //   }, 0);
 
-    var attendancesum = tempattendance.reduce(function (a, b) {
-      a *= 1;
-      b *= 1;
-      return a + b;
-    }, 0);
+  //   var attendancesum = tempattendance.reduce(function (a, b) {
+  //     a *= 1;
+  //     b *= 1;
+  //     return a + b;
+  //   }, 0);
 
-    allsum = quizsum + assignmentsum + projectsum + attendancesum + Final;
+  //   allsum = quizsum + assignmentsum + projectsum + attendancesum + Final;
 
-    if (allsum === 100) {
-      addassessment(
-        tempquiz,
-        tempAssignment,
-        tempproject,
-        tempattendance,
-        Final
-      );
-    } else {
-      console.log(
-        "the sum of all fields is",
-        allsum,
-        "the total mark should be 100"
-      );
-    }
+  //   if (allsum === 100) {
+  //     addassessment(
+  //       tempquiz,
+  //       tempAssignment,
+  //       tempproject,
+  //       tempattendance,
+  //       Final
+  //     );
+  //   } else {
+  //     console.log(
+  //       "the sum of all fields is",
+  //       allsum,
+  //       "the total mark should be 100"
+  //     );
+  //   }
 
-    // addassessment(tempquiz, tempAssignment, tempproject, tempattendance, Final);
-  };
+  //   // addassessment(tempquiz, tempAssignment, tempproject, tempattendance, Final);
+  // };
 
   if (!isauthenticated) {
     return <Redirect to="/logininstructor" />;
@@ -427,25 +491,23 @@ const Homeinstructor = ({
                       Result Summary
                     </button>{" "}
                   </li>
-
-                  <li style={allregularstyle}>
-                    {" "}
-                    <button
-                      // onClick={() => handleregularresultsummary(user._id)}
-                      className="btn btn-secondary btn-rounded"
-                    >
-                      Special entry
-                    </button>{" "}
-                  </li>
-
                   <li style={allregularstyle}>
                     <button
-                      //onClick={handlespecialli}
+                      onClick={() => hanlderegrading(user._id)}
                       className="btn btn-secondary btn-rounded"
                       //style={{ marginTop: 10 }}
                     >
                       Regrading
                     </button>
+                  </li>{" "}
+                  <li style={allregularstyle}>
+                    {" "}
+                    <button
+                      onClick={() => handlespecialentry(user._id)}
+                      className="btn btn-secondary btn-rounded"
+                    >
+                      Special entry
+                    </button>{" "}
                   </li>
                 </ul>
               </li>
@@ -618,6 +680,111 @@ const Homeinstructor = ({
 
           <div style={{ display: displaygradingsystem }}>
             <Gradingsystem />
+          </div>
+
+          <div style={{ display: displayregrading }}>
+            {/* <Studentattendance /> */}
+            <Typography variant="h6" color="primary" style={{ margin: 50 }}>
+              Student Regrading
+            </Typography>
+            {instructorjob.length !== null
+              ? instructorjob.map((item, idx) => {
+                  return (
+                    <Fragment key={idx}>
+                      {/* {regradinglist.map((item2, idx2) => {
+                        if (
+                          item.Year === item2.Year &&
+                          item.Semister === item2.Semister &&
+                          item.Section === item2.Section &&
+                          item.Coursename === item2.Coursename
+                        ) { */}
+
+                      <div style={{ marginLeft: 200 }} key={idx}>
+                        <div> Year : {item.Year}</div>
+                        <div> Semister : {item.Semister}</div>
+                        <div> Coursename : {item.Coursename}</div>
+                        <Link
+                          to="/instructorregrading"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() =>
+                              handleinstructorstudents(
+                                user.Department,
+                                item.Year,
+                                item.Semister,
+                                item.Section,
+                                item.Coursename
+                              )
+                            }
+                          >
+                            {" "}
+                            Section : {item.Section}
+                          </Button>
+                        </Link>
+                        <br></br> <hr></hr> <br></br>
+                      </div>
+
+                      {/* }
+                      })} */}
+                    </Fragment>
+                  );
+                })
+              : null}
+          </div>
+
+          <div style={{ display: displayspecialentry }}>
+            <Typography variant="h6" color="primary" style={{ margin: 50 }}>
+              Student Special Entry
+            </Typography>
+            {instructorjob.length !== null
+              ? instructorjob.map((item, idx) => {
+                  return (
+                    <Fragment key={idx}>
+                      {/* {regradinglist.map((item2, idx2) => {
+                        if (
+                          item.Year === item2.Year &&
+                          item.Semister === item2.Semister &&
+                          item.Section === item2.Section &&
+                          item.Coursename === item2.Coursename
+                        ) { */}
+
+                      <div style={{ marginLeft: 200 }} key={idx}>
+                        <div> Year : {item.Year}</div>
+                        <div> Semister : {item.Semister}</div>
+                        <div> Coursename : {item.Coursename}</div>
+                        <Link
+                          to="/instructorspecialentry"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() =>
+                              handleinstructorstudents(
+                                user.Department,
+                                item.Year,
+                                item.Semister,
+                                item.Section,
+                                item.Coursename
+                              )
+                            }
+                          >
+                            {" "}
+                            Section : {item.Section}
+                          </Button>
+                        </Link>
+                        <br></br> <hr></hr> <br></br>
+                      </div>
+
+                      {/* }
+                      })} */}
+                    </Fragment>
+                  );
+                })
+              : null}
           </div>
         </Grid>
       </Grid>

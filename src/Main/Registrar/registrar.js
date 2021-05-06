@@ -89,6 +89,8 @@ const Registrar = ({
         </button>
       </Link>
 
+  
+
       <Link to="/registrarapproval" style={{ textDecoration: "none" }}>
         <button
           style={{ marginTop: 50, marginLeft: 50 }}
@@ -127,6 +129,48 @@ const Registrar = ({
         >
           {" "}
           Academic Calendar Report
+        </button>
+      </Link>
+
+      <Link to="/registrarregrading" style={{ textDecoration: "none" }}>
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
+          // onClick={handleregistrarapproval}
+        >
+          {" "}
+          Student Regrading
+        </button>
+      </Link>
+
+      <Link to="/registrarspecial" style={{ textDecoration: "none" }}>
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
+          // onClick={handleregistrarapproval}
+        >
+          {" "}
+          Student Special Case
+        </button>
+      </Link>
+
+      <Link to="/accountmanagement" style={{ textDecoration: "none" }}>
+        <button
+          style={{ marginTop: 50, marginLeft: 50 }}
+          className="btn btn-warning"
+
+          // variant="outlined"
+          // color="primary"
+          // onClick={handleregistrarapproval}
+        >
+          {" "}
+          Account Management
         </button>
       </Link>
 
